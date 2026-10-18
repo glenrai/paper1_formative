@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Paper 1 Formative: May 2023</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Paper 1 Formative: a scaffolded first full Paper 1 for DP English A Language and Literature, using the May 2023 HL texts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: one 960px workbook column of cards, sticky bar with timer, colour-coded per text (pink podcast, mint infographic) */
+:root{
+  --bg:#F5F7FC; --surface:#FFFFFF; --ink:#22264A; --soft:#5B6184; --line:#DCE1F0; --field:#F9FAFE; --fieldline:#C9D0E6;
+  --pink:#E0457F; --pinkbg:#FFE8F1; --sun:#C98A0E; --sunbg:#FFF3D6; --mint:#178A60; --mintbg:#DDF6EC; --grape:#6E5CE6; --grapebg:#ECE9FF; --sky:#2E8FD8; --skybg:#E2F1FC;
+  --shadow:0 1px 2px rgba(34,38,74,.06),0 6px 20px rgba(34,38,74,.06);
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif; --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --acc:var(--grape); --accbg:var(--grapebg);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#15172B; --surface:#1E2140; --ink:#EEF0FF; --soft:#A9AED0; --line:#33385F; --field:#191C36; --fieldline:#40467A;
+  --pink:#FF7EAD; --pinkbg:#3A1F33; --sun:#F6BE4F; --sunbg:#3A301B; --mint:#4FD39F; --mintbg:#173529; --grape:#A195FF; --grapebg:#28244D; --sky:#62B4F0; --skybg:#1A2E44; --shadow:0 1px 2px rgba(0,0,0,.3);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#15172B; --surface:#1E2140; --ink:#EEF0FF; --soft:#A9AED0; --line:#33385F; --field:#191C36; --fieldline:#40467A;
+  --pink:#FF7EAD; --pinkbg:#3A1F33; --sun:#F6BE4F; --sunbg:#3A301B; --mint:#4FD39F; --mintbg:#173529; --grape:#A195FF; --grapebg:#28244D; --sky:#62B4F0; --skybg:#1A2E44; --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;margin:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 80px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.wrap{max-width:960px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:800;font-size:17px;margin-right:auto}
+.clockbox{display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+.clockbox .lab{font-size:12px;color:var(--soft);text-transform:uppercase;letter-spacing:.06em}
+.clockbox .clock{font-family:var(--display);font-weight:700;font-size:20px;min-width:4.6ch}
+.clockbox.low .clock{color:var(--pink)}
+.meter{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft);font-variant-numeric:tabular-nums}
+.track{width:90px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--mint);transition:width .3s}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-top:8px;scrollbar-width:none}
+.chips a{flex:none;font-size:13px;font-weight:600;color:var(--soft);text-decoration:none;padding:4px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface)}
+.chips a:hover{color:var(--ink)}
+.chips a.t1{border-color:color-mix(in srgb,var(--pink) 40%,var(--line))}
+.chips a.t2{border-color:color-mix(in srgb,var(--mint) 40%,var(--line))}
+
+.btn{border:0;border-radius:10px;padding:8px 14px;font-weight:600;font-size:14px;background:var(--ink);color:var(--bg)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--fieldline)}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.hero{padding-block:36px 18px;display:grid;gap:14px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--grape)}
+.hero h1{font-size:clamp(34px,6vw,56px);font-weight:800;letter-spacing:-.02em}
+.hero h1 span{color:var(--grape)}
+.hero .lead{font-size:18px;max-width:62ch;color:var(--soft)}
+.who{display:flex;gap:12px;flex-wrap:wrap}
+.who label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--soft);flex:1 1 200px}
+.who input{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--fieldline);border-radius:10px;padding:9px 12px}
+
+main{display:grid;gap:22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3.5vw,32px);box-shadow:var(--shadow);display:grid;gap:14px;min-width:0;scroll-margin-top:120px}
+.card.t1{--acc:var(--pink);--accbg:var(--pinkbg)}
+.card.t2{--acc:var(--mint);--accbg:var(--mintbg)}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acc)}
+.card h2{font-size:clamp(24px,3.6vw,32px);font-weight:800;letter-spacing:-.01em}
+.card h3{font-size:19px;font-weight:700;margin-top:10px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.step{font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--accbg);color:var(--acc);padding:3px 9px;border-radius:99px}
+.min{font-family:var(--body);font-size:13px;font-weight:600;color:var(--soft)}
+.lead{color:var(--soft);max-width:68ch}
+.hint{color:var(--soft);font-size:15px;max-width:72ch}
+.src{font-size:15px;color:var(--soft);max-width:72ch}
+.gq{background:var(--accbg);border-radius:14px;padding:14px 16px;display:grid;gap:4px}
+.gq b{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc)}
+.gq span{font-family:var(--display);font-size:20px;font-weight:700;line-height:1.3}
+
+.fld{display:grid;gap:5px;min-width:0}
+.fld>span{font-size:13px;font-weight:700;color:var(--soft)}
+.fld>small{font-size:13px;color:var(--soft)}
+textarea.f,input.f{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--field);border:1px solid var(--fieldline);border-radius:10px;padding:9px 11px;resize:vertical;line-height:1.5}
+textarea.f.done,input.f.done{border-color:color-mix(in srgb,var(--mint) 55%,var(--fieldline))}
+textarea.essay{min-height:150px;font-size:16px;line-height:1.7}
+select.f{width:100%;font:inherit;font-size:14px;color:var(--ink);background:var(--field);border:1px solid var(--fieldline);border-radius:10px;padding:8px 10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px}
+
+.paper{display:flex;gap:12px;align-items:flex-start;background:var(--sunbg);border-radius:14px;padding:12px 16px;font-size:15px}
+.paper b{color:var(--sun)}
+
+/* blueprint */
+.moves{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr));gap:10px}
+.moves div{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:4px;font-size:14px;color:var(--soft)}
+.moves b{font-family:var(--display);font-size:16px;color:var(--ink)}
+.moves .k{font-size:12px;font-weight:700;color:var(--grape);letter-spacing:.06em}
+.words{display:flex;flex-wrap:wrap;gap:6px}
+.words span{font-size:13px;padding:3px 10px;border-radius:99px;background:var(--grapebg);color:var(--grape);font-weight:600}
+.words.tone span{background:var(--skybg);color:var(--sky)}
+.chooser{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:10px}
+.chooser label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--fieldline);border-radius:12px;padding:12px;cursor:pointer;font-size:14px;color:var(--soft)}
+.chooser label b{display:block;color:var(--ink);font-size:15px}
+.chooser input{margin-top:4px;accent-color:var(--grape)}
+.chooser label:has(input:checked){border-color:var(--grape);background:var(--grapebg)}
+
+/* choice bank */
+.bank{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:10px}
+.ch{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;align-content:start;min-width:0}
+.ch.found{border-color:color-mix(in srgb,var(--acc) 50%,var(--line));background:color-mix(in srgb,var(--accbg) 45%,var(--surface))}
+.ch .top{display:flex;gap:10px;align-items:flex-start}
+.ch .n{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:13px;font-weight:700;background:var(--accbg);color:var(--acc);font-variant-numeric:tabular-nums}
+.ch .nm{font-weight:700;font-size:15px;line-height:1.3}
+.ch .wh{font-size:13px;color:var(--soft);margin-top:2px}
+.ch .star{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sun);background:var(--sunbg);padding:1px 7px;border-radius:99px;margin-left:6px;white-space:nowrap}
+.ch label.tick{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600;color:var(--soft);margin-left:auto;flex:none;cursor:pointer}
+.ch label.tick input{accent-color:var(--acc);width:16px;height:16px}
+.ch input.f{font-size:14px;padding:7px 10px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--soft);align-items:center}
+
+/* hints */
+details.hintbox{border:1px dashed var(--fieldline);border-radius:12px;padding:10px 14px}
+details.hintbox summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--acc)}
+details.hintbox ul{margin:10px 0 2px;padding-left:20px;display:grid;gap:6px;font-size:15px}
+details.hintbox p{margin-top:8px;font-size:14px;color:var(--soft)}
+
+/* skeleton planning */
+.skel{display:grid;gap:14px}
+.sk{border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;min-width:0}
+.sk h4{margin:0;font-family:var(--display);font-size:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sk h4 .tag{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--accbg);color:var(--acc)}
+.frame{line-height:2.25;font-size:16px;overflow-wrap:anywhere}
+input.gap{font:inherit;font-size:15px;color:var(--ink);background:var(--field);border:0;border-bottom:2px solid var(--fieldline);border-radius:6px 6px 0 0;padding:1px 6px;max-width:100%;min-width:6ch}
+input.gap:focus{outline:none;border-bottom-color:var(--acc);background:var(--accbg)}
+input.gap.done{border-bottom-color:var(--mint)}
+.row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) minmax(0,.6fr);gap:8px;align-items:end}
+@media (max-width:640px){.row{grid-template-columns:1fr}}
+.teeal{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:baseline}
+.teeal>.pill{font-size:12px;font-weight:800;background:var(--accbg);color:var(--acc);border-radius:6px;padding:1px 7px;text-align:center}
+
+/* writing */
+.wblock{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.wblock:first-of-type{border-top:0;padding-top:0}
+.wblock .head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.wblock .head b{font-family:var(--display);font-size:17px}
+.wblock .head .min{margin-left:auto}
+.planpeek{font-size:14px;color:var(--soft);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.planpeek b{color:var(--ink);font-weight:700}
+.planpeek em{font-style:normal;color:var(--acc);font-weight:700}
+.wc{font-size:13px;color:var(--soft);font-variant-numeric:tabular-nums}
+.totals{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--accbg);border-radius:12px;padding:10px 14px;font-size:14px}
+.totals b{font-family:var(--display);font-size:18px;font-variant-numeric:tabular-nums}
+.totals .bar2{flex:1 1 140px;height:8px;background:color-mix(in srgb,var(--surface) 70%,transparent);border-radius:99px;overflow:hidden}
+.totals .bar2 i{display:block;height:100%;width:0;background:var(--acc)}
+
+.checks{display:grid;gap:6px}
+.checks label{display:grid;grid-template-columns:auto 92px 1fr;gap:10px;align-items:start;font-size:15px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);cursor:pointer}
+.checks label:has(input:checked){background:color-mix(in srgb,var(--mintbg) 60%,var(--surface));border-color:color-mix(in srgb,var(--mint) 40%,var(--line))}
+.checks em{font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);padding-top:2px}
+.checks input{accent-color:var(--mint);width:17px;height:17px;margin-top:2px}
+@media (max-width:520px){.checks label{grid-template-columns:auto 1fr}.checks em{grid-column:2}}
+
+.finish{border-radius:16px;padding:18px;display:grid;gap:10px;background:var(--mintbg)}
+.finish.locked{background:var(--field);border:1px dashed var(--fieldline)}
+.finish b.t{font-family:var(--display);font-size:20px}
+.req{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:14px}
+.req li::before{content:"○ ";color:var(--soft)}
+.req li.ok{color:var(--mint)}
+.req li.ok::before{content:"● "}
+.foot{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.fallback textarea{width:100%;min-height:200px;font:inherit;font-size:13px;background:var(--field);color:var(--ink);border:1px solid var(--fieldline);border-radius:10px;padding:10px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;transition:all .25s;z-index:40;max-width:calc(100% - 32px);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.confirm{display:inline-flex;gap:8px;align-items:center;font-size:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="bar"><div class="wrap">
+  <span class="brand">Paper 1 Formative</span>
+  <div class="clockbox" id="clockbox"><span class="lab" id="clockLab">Exam time</span><span class="clock" id="clock">90:00</span><button class="btn sm" type="button" id="tStart">Start</button><button class="btn sm ghost" type="button" id="tReset">Reset</button></div>
+  <div class="meter"><span class="track"><i id="meterFill"></i></span><span id="meterTxt">0%</span></div>
+</div><div class="wrap"><nav class="chips" id="chips"></nav></div></div>
+
+<div class="wrap">
+<header class="hero">
+  <span class="eyebrow">DP English A: Language and Literature · Paper 1 · May 2023</span>
+  <h1>Your first <span>full Paper 1</span></h1>
+  <p class="lead">Last time you filled in a skeleton someone else had written. This time you build the skeleton yourself, then write the whole guided analysis from it.</p>
+  <div class="who">
+    <label for="f-name">Your name<input id="f-name" data-k="name" autocomplete="name"></label>
+    <label for="f-date">Date<input id="f-date" data-k="date" type="date"></label>
+  </div>
+  <p class="hint">Your answers save in this browser as you type. When you finish, you download your essay as a PDF and upload it to Toddle.</p>
+</header>
+<main id="main"></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(function(){
+const KEY='p1-formative-m23-v1';
+let S={};
+try{S=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){S={}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ================= content ================= */
+const CTX=[['type','Text type and source'],['voice','Producer and voice'],['aud1','Primary audience'],['aud2','Secondary audience(s)'],['purpose','Purpose'],['message','Message']];
+
+const T={
+t1:{
+ cls:'t1', short:'Text 1', nick:'Podcast', title:'"The War for Kindness"',
+ src:'A transcript from The Happiness Lab, a podcast hosted by Dr Laurie Santos, professor of psychology at Yale University. In this episode she talks to Dr Jamil Zaki of Stanford University. The page includes the podcast cover and an episode summary.',
+ gq:'How and to what effect is empathy presented in the text?',
+ unpack:[
+  ['Two questions are hiding in this one guiding question. What are they?','HOW is empathy presented ... and TO WHAT EFFECT ...'],
+  ['Empathy is presented in more than one way. List at least three different things the text says or suggests empathy is.','e.g. something under threat, something good for you ...'],
+  ['"Effect" on whom? Who is listening to this podcast, and what does the text want them to think, feel or do?','']
+ ],
+ choices:[
+  ['Paradox in the episode title','Cover, title and line 3',0],
+  ['Visual design of the podcast cover: colour and the arrangement of the words','Cover image',0],
+  ['Contrast in the episode summary','Summary beside the cover',0],
+  ['Expert credentials and a friendly introduction','Lines 1 to 4',0],
+  ['Conversational register and filler phrases','Lines 6 to 11',0],
+  ['Allusion','Line 10 (read footnote 2)',0],
+  ['Hyperbolic metaphor','Line 11',0],
+  ['Extended war or battle metaphor','Lines 13 to 14, and the title',0],
+  ['Statistics and dates as evidence','Lines 15 to 17',0],
+  ['A common belief, then a reversal','Lines 20 to 24',1],
+  ['Mirrored phrasing (chiasmus)','Lines 23 to 24',1],
+  ['Positive semantic field and a list of benefits','Lines 25 to 27',0],
+  ['Humour and understatement','Lines 27 to 28',0],
+  ['Simile and growth metaphor','Lines 30 to 31 and line 36',1],
+  ['Anecdote from a university class','Lines 31 to 41',0],
+  ['Tricolon of conflict verbs','Line 35',0],
+  ['Imperatives and direct instruction','Lines 36 to 38',0],
+  ['Inclusive pronouns','Throughout, e.g. lines 15, 18, 30',0],
+  ['Short sentences and repetition','Lines 45 to 47',1],
+  ['Two voices: interview structure and timestamps','The whole transcript',1],
+  ['The final image of the text','Lines 48 to 49',0]
+ ],
+ ideas:[
+  'Empathy as something under attack in a divided world',
+  'Empathy as good for us, and as a skill anyone can learn',
+  'Empathy as a way back to shared humanity'
+ ],
+ ideaNote:'These are only starting points. Each idea needs at least two choices from your list. You can reword them or replace them with your own.',
+ intro:['This text is a ',20,' from ',18,', a podcast hosted by ',18,'. In this episode she talks to ',20,' about ',30,'. The primary audience is ',30,', while a secondary audience may include ',30,'. The purpose of the episode is to ',30,', and it also ',30,'. Its central message is that ',42,'.'],
+ thesis:['Through ',30,', the podcast presents empathy as ',30,', persuading listeners to ',36,'.'],
+ topic:['The podcast presents empathy as ',36,'.'],
+ cA:'Main choice', cB:'Supporting choice',
+ explain:['In answer to the guiding question, these choices present empathy as ',30,' because ',36,'.'],
+ concl:['Overall, the podcast presents empathy as ',30,', so that listeners ',40,'.'],
+ extraCheck:['Body','Every paragraph says what empathy is presented AS, not only which device is used.']
+},
+t2:{
+ cls:'t2', short:'Text 2', nick:'Infographic', title:'"Science says saving makes you happier"',
+ src:'An infographic from the website of the Foresters Friendly Society, a UK mutual savings and investment provider that promises "Straightforward financial solutions with a human touch". It ends with an invitation to become a member.',
+ gq:'Explore how the text and images interplay to appeal to a range of audiences.',
+ unpack:[
+  ['What does "interplay" mean? What must every one of your body paragraphs therefore include?',''],
+  ['"A range of audiences": name at least three different groups of people this infographic could be trying to reach. What clue in the text points to each one?','e.g. young adults: takeaway coffees ...'],
+  ['What does the infographic want these audiences to do in the end? Look carefully at the bottom of page 5.','']
+ ],
+ choices:[
+  ['Bold capitalised headline, with one word enlarged','Top panel, on the piggy bank',0],
+  ['The piggy bank as a central symbol','Top panel',0],
+  ['Two hands with different sleeves dropping coins','Top panel',0],
+  ['Statistic in the circular badge','Top right of the first panel',0],
+  ['Emojis paired with emotive adjectives','Dark green band',0],
+  ['Scientific vocabulary and named research','Under the emojis, the "Which?" heading, footnote numbers and "Sources"',0],
+  ['Rhetorical question','Left column, top',0],
+  ['Everyday items with prices, joined by plus signs','Left column: coffees, takeaway, wine',0],
+  ['Numbered three-step structure with icons','"3 habits" section',0],
+  ['Colour palette: greens and gold','The whole infographic',0],
+  ['Second-person address','"Why it works", "Why not try" and the final speech box',0],
+  ['Section headings that explain and then suggest','"Why it works" and "Why not try"',0],
+  ['Coin stack growing from minus to plus','Bottom chart',0],
+  ['Exclamatory slogan in bold','Final speech box',0],
+  ['Call to action and price contrast (free vs £25)','Membership panel at the end',0],
+  ['Shift from advice to advertisement','Overall structure, top to bottom',1],
+  ['A possible contradiction between two habits','Habits 2 and 3: compare icons and words',1],
+  ['Arrows and vertical lines that guide the eye','The whole page',1]
+ ],
+ ideas:[
+  'Appealing to younger, less experienced savers by making saving look simple and small',
+  'Appealing to cautious or sceptical readers through scientific authority',
+  'Turning every reader into a potential member of the Society'
+ ],
+ ideaNote:'Organising your paragraphs by AUDIENCE is one strong option. Organising them by kind of appeal (emotional, rational, practical) also works. Every paragraph must discuss words and images together.',
+ intro:['This text is ',20,' from the website of ',22,', which promises ',30,'. It combines ',22,' with ',22,'. Its primary audience is ',28,', but it also appeals to ',26,' and ',26,'. Its purpose is to ',28,', and ultimately to ',28,'. Its central message is that ',42,'.'],
+ thesis:['By pairing ',24,' with ',24,', the infographic appeals to ',30,', persuading them that ',34,'.'],
+ topic:['The infographic appeals to ',26,' by ',34,'.'],
+ cA:'Written choice', cB:'Visual choice',
+ explain:['The words and the image work together because ',40,'. This answers the guiding question by showing ',30,'.'],
+ concl:['Overall, the interplay of text and image ',34,', so that ',40,'.'],
+ extraCheck:['Body','Every paragraph discusses a written choice AND a visual choice, and explains how they work together.']
+}};
+
+const VERBS='positions invites encourages reassures persuades evokes heightens reinforces humanises challenges provokes foregrounds undercuts normalises legitimises flatters simplifies'.split(' ');
+const TONES='conversational warm earnest urgent hopeful confiding authoritative reassuring playful upbeat persuasive instructive'.split(' ');
+const CHECKS=[['Introduction','I named the text type and source.'],['Introduction','I identified the target audience(s).'],['Introduction','I stated the purpose and the message separately.'],['Introduction','My thesis answers the guiding question and does not list techniques.'],['Body','Each body paragraph is built around ONE idea.'],['Body','Each paragraph uses short, embedded quotations or precise visual references.'],['Body','I explained how each choice answers the guiding question.'],['Body','I named a specific effect on a named audience, with a reason.'],['Body','Each paragraph links back to the purpose or message.'],['Conclusion','I restated my thesis in fresh words, with no new evidence.'],['Language','I used precise effect verbs in place of "shows" and "makes".']];
+const TIMES=[['Read and context',10],['Unpack the question',5],['Choice hunt',15],['Plan',15],['Write',40],['Self-check',5]];
+const MINW=350;
+
+/* ================= render helpers ================= */
+const ta=(k,ph='',rows=2,cls='')=>`<textarea class="f ${cls}" id="f-${k.replace(/\./g,'-')}" data-k="${k}" rows="${rows}" placeholder="${esc(ph)}"></textarea>`;
+const inp=(k,ph='',cls='')=>`<input class="f ${cls}" id="f-${k.replace(/\./g,'-')}" data-k="${k}" placeholder="${esc(ph)}">`;
+let gapN=0;
+const frame=(arr,pre)=>{let i=0;return `<p class="frame">${arr.map(s=>typeof s==='string'?esc(s):`<input class="gap" id="g-${pre.replace(/\./g,'-')}-${i}" data-k="${pre}.${i}" data-w="${s}" style="width:${s+2}ch" aria-label="Gap ${++i}">`).join('')}</p>`};
+const fillFrame=(arr,pre)=>{let i=0;return arr.map(s=>typeof s==='string'?s:('['+((S[pre+'.'+(i++)]||'').trim()||'...')+']')).join('')};
+const sel=(id,k)=>{const t=T[id];return `<select class="f" id="f-${k.replace(/\./g,'-')}" data-k="${k}"><option value="">Choose from your list...</option>${t.choices.map((c,i)=>`<option value="${i}">${i+1}. ${esc(c[0])}</option>`).join('')}<option value="own">My own choice (not on the list)</option></select>`};
+const choiceLabel=(id,v)=>v===''||v==null?'':(v==='own'?'my own choice':(T[id].choices[+v]||[''])[0]);
+
+/* ================= build ================= */
+let h='';
+h+=`<section class="card" id="start"><span class="kicker">Before you start · 2 min</span><h2>How this paper works</h2>
+<p class="lead">You have the printed exam paper on your desk. Read and annotate the texts there. Use this page to hunt for choices, plan, and write.</p>
+<h3>Which text are you writing on?</h3><p class="hint">Your teacher will tell you. You have 90 minutes per text. In the real exam, Standard Level students write on one text in 75 minutes and Higher Level students write on both in 2 hours 15 minutes. The extra time today is for the guided steps.</p>
+<div class="chooser">${[['t1','Text 1 only','The War for Kindness: podcast transcript'],['t2','Text 2 only','Saving infographic from Foresters'],['both','Both texts','The full Higher Level paper']].map(c=>`<label><input type="radio" name="mode" id="mode-${c[0]}" value="${c[0]}"><span><b>${c[1]}</b>${c[2]}</span></label>`).join('')}</div>
+<h3>Your 90 minutes per text</h3>
+<div class="moves">${TIMES.map((t,i)=>`<div><span class="k">STEP ${i+1}</span><b>${t[0]}</b><span>${t[1]} min</span></div>`).join('')}</div>
+<h3>Remember the shape</h3>
+<div class="moves">
+<div><span class="k">INTRODUCTION</span><b>Five moves</b><span>Text type, audience, purpose, message, thesis.</span></div>
+<div><span class="k">BODY × 3</span><b>T E E A L</b><span>Technique, Evidence, Explain, Audience, Link.</span></div>
+<div><span class="k">CONCLUSION</span><b>Two or three sentences</b><span>Thesis in fresh words. No new evidence.</span></div>
+<div><span class="k">THE BIG RULE</span><b>Name it, then explain it</b><span>A device earns credit only when you explain its effect.</span></div>
+</div>
+<h3>Effect verbs to use in place of "shows"</h3><div class="words">${VERBS.map(v=>`<span>${v}</span>`).join('')}</div>
+<h3>Tone words</h3><div class="words tone">${TONES.map(v=>`<span>${v}</span>`).join('')}</div>
+</section>`;
+
+['t1','t2'].forEach(id=>{
+ const t=T[id];
+ // Part A: understand
+ h+=`<section class="card ${t.cls}" id="${id}-read" data-text="${id}"><span class="kicker">${t.short} · ${t.nick} · Steps 1 to 3</span><h2>${t.short}: ${esc(t.title)}</h2>
+ <p class="src">${esc(t.src)}</p>
+ <div class="gq"><b>Guiding question</b><span>${esc(t.gq)}</span></div>
+ <div class="paper"><span><b>On paper first.</b> Read the whole text once without a pen. Then read it again and annotate: underline striking words, circle images, and write the audience in the margin.</span></div>
+ <h3><span class="step">Step 1</span>Context grid <span class="min">10 min with reading</span></h3>
+ <div class="grid3">${CTX.map(c=>`<label class="fld"><span>${c[1]}</span>${ta(id+'.ctx.'+c[0])}</label>`).join('')}</div>
+ <h3><span class="step">Step 2</span>Unpack the guiding question <span class="min">5 min</span></h3>
+ <p class="hint">Answer each question in a sentence or two. Your answers here decide what your essay is about.</p>
+ ${t.unpack.map((u,i)=>`<label class="fld"><span>${esc(u[0])}</span>${ta(id+'.gq.'+i,u[1],2)}</label>`).join('')}
+ <h3><span class="step">Step 3</span>Choice hunt <span class="min">15 min</span></h3>
+ <p class="hint">Here are authorial choices used in this text, with where to look. The list names the choice and nothing more. Your job is to find the exact words or visual detail, tick it, and copy the evidence in. You will not use all of them. Aim to find at least eight.</p>
+ <div class="legend"><span><span class="star" style="margin:0">Stretch</span> harder to spot or explain</span><span id="${id}-found">0 found</span></div>
+ <div class="bank">${t.choices.map((c,i)=>`<div class="ch" id="${id}-ch-${i}"><div class="top"><span class="n">${i+1}</span><div><div class="nm">${esc(c[0])}${c[2]?'<span class="star">Stretch</span>':''}</div><div class="wh">${esc(c[1])}</div></div><label class="tick" for="f-${id}-found-${i}"><input type="checkbox" id="f-${id}-found-${i}" data-k="${id}.found.${i}">Found</label></div>${inp(id+'.ev.'+i,id==='t1'?'Quote with line number':'Quote the words or describe the image')}</div>`).join('')}</div>
+ <label class="fld"><span>Challenge: one authorial choice that is NOT on this list</span><small>Name it, give the evidence, and say why it matters.</small>${ta(id+'.extra','',2)}</label>
+ </section>`;
+
+ // plan
+ h+=`<section class="card ${t.cls}" id="${id}-plan" data-text="${id}"><span class="kicker">${t.short} · Step 4 · 15 min</span><h2>Build your skeleton</h2>
+ <p class="lead">Last time the skeleton was written for you. This time you write it. Fill every gap with a word or short phrase: this is your plan, so notes are fine. Full sentences come in Step 5.</p>
+ <div class="gq"><b>Guiding question</b><span>${esc(t.gq)}</span></div>
+ <h3>First, group your choices into three ideas</h3>
+ <p class="hint">Look at the choices you found. Which ones build the SAME idea about the guiding question? Each group becomes one body paragraph. Try this yourself before you open the hint.</p>
+ <details class="hintbox"><summary>Stuck? Open three possible paragraph ideas</summary><ul>${t.ideas.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><p>${esc(t.ideaNote)}</p></details>
+ <div class="skel">
+  <div class="sk"><h4><span class="tag">Plan</span>Introduction</h4>${frame(t.intro,id+'.pi')}</div>
+  <div class="sk"><h4><span class="tag">Plan</span>Thesis</h4><p class="hint">One sentence that answers the guiding question with an interpretation someone could disagree with.</p>${frame(t.thesis,id+'.pt')}</div>
+  ${[1,2,3].map(b=>`<div class="sk"><h4><span class="tag">Plan</span>Body paragraph ${b}</h4>
+   <div class="teeal"><span class="pill">T</span>${frame(t.topic,id+'.b'+b+'.top')}</div>
+   <div class="teeal"><span class="pill">E</span><div class="row"><label class="fld"><span>${t.cA}</span>${sel(id,id+'.b'+b+'.ca')}</label><label class="fld"><span>Evidence</span>${inp(id+'.b'+b+'.ea',id==='t2'?'Exact words':'Short quotation')}</label><label class="fld"><span>${id==='t1'?'Line':'Where'}</span>${inp(id+'.b'+b+'.la','')}</label></div></div>
+   <div class="teeal"><span class="pill">E</span><div class="row"><label class="fld"><span>${t.cB}</span>${sel(id,id+'.b'+b+'.cb')}</label><label class="fld"><span>Evidence</span>${inp(id+'.b'+b+'.eb',id==='t2'?'Describe the image precisely':'Short quotation')}</label><label class="fld"><span>${id==='t1'?'Line':'Where'}</span>${inp(id+'.b'+b+'.lb','')}</label></div></div>
+   <div class="teeal"><span class="pill">E</span>${frame(t.explain,id+'.b'+b+'.ex')}</div>
+   <div class="teeal"><span class="pill">A</span>${frame(['For ',24,', this ',14,' because ',36,'.'],id+'.b'+b+'.au')}</div>
+   <div class="teeal"><span class="pill">L</span>${frame(['This reinforces the message that ',40,'.'],id+'.b'+b+'.li')}</div>
+  </div>`).join('')}
+  <div class="sk"><h4><span class="tag">Plan</span>Conclusion</h4>${frame(t.concl,id+'.pc')}</div>
+ </div>
+ <p class="hint">Before you move on, read your thesis and your three topic sentences one after another. Do they tell one argument? If a paragraph does not answer the guiding question, change it now.</p>
+ </section>`;
+
+ // write
+ const blocks=[['intro','Introduction',5,'Five moves: text type, audience, purpose, message, thesis.'],['bp1','Body paragraph 1',10,'T E E A L. Open with your idea, not with a device name.'],['bp2','Body paragraph 2',10,'Use a transition that connects to paragraph 1.'],['bp3','Body paragraph 3',10,'Often your most interesting or most complex idea.'],['concl','Conclusion',5,'Thesis in fresh words, gather your ideas, end on the audience.']];
+ h+=`<section class="card ${t.cls}" id="${id}-write" data-text="${id}"><span class="kicker">${t.short} · Step 5 · 40 min</span><h2>Write your guided analysis</h2>
+ <p class="lead">Turn your skeleton into continuous, formal prose. Your plan for each part sits above its box. Write in full sentences, embed your quotations, and explain every choice you name.</p>
+ <div class="gq"><b>Guiding question</b><span>${esc(t.gq)}</span></div>
+ ${blocks.map(b=>`<div class="wblock"><div class="head"><b>${b[1]}</b><span class="wc" id="${id}-wc-${b[0]}">0 words</span><span class="min">about ${b[2]} min</span></div><div class="planpeek" id="${id}-peek-${b[0]}"></div><p class="hint">${esc(b[3])}</p>${ta(id+'.w.'+b[0],'',6,'essay')}</div>`).join('')}
+ <div class="totals"><span>Total</span><b id="${id}-total">0</b><span>words</span><span class="bar2"><i id="${id}-tbar"></i></span><span class="wc">Aim for at least ${MINW}</span></div>
+ </section>`;
+
+ // check
+ h+=`<section class="card ${t.cls}" id="${id}-check" data-text="${id}"><span class="kicker">${t.short} · Step 6 · 5 min</span><h2>Self-check</h2>
+ <p class="hint">Reread your analysis with this list. Tick only what you can actually point to. If something is missing and you have time, fix it.</p>
+ <div class="checks">${CHECKS.concat([t.extraCheck]).map((c,i)=>`<label for="f-${id}-chk-${i}"><input type="checkbox" id="f-${id}-chk-${i}" data-k="${id}.chk.${i}"><em>${c[0]}</em><span>${esc(c[1])}</span></label>`).join('')}</div>
+ <label class="fld"><span>Which part of this analysis are you most proud of, and which part was hardest? Why?</span>${ta(id+'.reflect','',3)}</label>
+ </section>`;
+});
+
+h+=`<section class="card" id="finish"><span class="kicker">Hand in</span><h2>Finish and download</h2>
+<div class="paper"><span><b>Hand in on Toddle.</b> Your PDF contains your finished guided analysis only, with your name on it. Your planning stays on this page. After you download the PDF, upload it to the Formative 1 task on Toddle so it can be graded.</span></div>
+<div class="finish locked" id="finishBox"><b class="t" id="finishTitle">Finish to unlock your PDF</b><p id="finishTxt">The download button switches on when every item below is done.</p><ul class="req" id="lockList"></ul>
+<div class="foot"><button class="btn" type="button" id="pdfBtn" disabled>Download my essay as PDF</button><button class="btn ghost" type="button" id="copyBtn" disabled>Copy my essay</button></div></div>
+<div class="fallback" id="fallback" hidden><p class="hint">Select all of the text below and copy it.</p><textarea id="fallbackTxt" readonly></textarea></div>
+<div class="foot"><span id="resetWrap"><button class="btn ghost" type="button" id="resetBtn">Clear all answers</button></span></div>
+</section>`;
+document.getElementById('main').innerHTML=h;
+
+/* ================= state ================= */
+const fields=[...document.querySelectorAll('[data-k]')];
+const grow=el=>{if(el.tagName==='TEXTAREA'){el.style.height='auto';el.style.height=(el.scrollHeight+3)+'px'}};
+const gapW=el=>{const b=+el.dataset.w||10;el.style.width=Math.max(b+2,el.value.length+3)+'ch'};
+const words=s=>(s||'').trim().split(/\s+/).filter(Boolean).length;
+fields.forEach(el=>{
+ const k=el.dataset.k;
+ if(el.type==='checkbox'){el.checked=!!S[k];el.addEventListener('change',()=>{S[k]=el.checked;save();onChange(k)})}
+ else{
+  if(S[k]!=null)el.value=S[k];
+  const ev=el.tagName==='SELECT'?'change':'input';
+  el.addEventListener(ev,()=>{S[k]=el.value;save();grow(el);if(el.classList.contains('gap'))gapW(el);el.classList.toggle('done',!!el.value.trim());onChange(k)});
+  el.classList.toggle('done',!!(el.value||'').trim());
+ }
+});
+requestAnimationFrame(()=>{document.querySelectorAll('textarea.f').forEach(grow);document.querySelectorAll('input.gap').forEach(gapW)});
+
+const modes=[...document.querySelectorAll('input[name="mode"]')];
+modes.forEach(r=>{if(S.mode===r.value)r.checked=true;r.addEventListener('change',()=>{S.mode=r.value;save();applyMode();resetClock();onChange('mode')})});
+const active=()=>S.mode==='t1'?['t1']:S.mode==='t2'?['t2']:['t1','t2'];
+function applyMode(){
+ const a=active();
+ document.querySelectorAll('[data-text]').forEach(s=>s.hidden=!a.includes(s.dataset.text));
+ const nav=[['start','Start','']];
+ a.forEach(id=>{const n=id==='t1'?'T1':'T2';nav.push([id+'-read',n+' Read and hunt',id],[id+'-plan',n+' Skeleton',id],[id+'-write',n+' Write',id],[id+'-check',n+' Check',id])});
+ nav.push(['finish','Finish','']);
+ document.getElementById('chips').innerHTML=nav.map(c=>`<a href="#${c[0]}" class="${c[2]}">${c[1]}</a>`).join('');
+}
+
+function peeks(id){
+ const p=(k)=>esc((S[k]||'').trim())||'<span style="opacity:.6">...</span>';
+ const gaps=(pre,n)=>{const v=[];for(let i=0;i<n;i++){const x=(S[pre+'.'+i]||'').trim();if(x)v.push(esc(x))}return v.length?v.join(' · '):'<span style="opacity:.6">not planned yet</span>'};
+ const t=T[id];
+ const set=(b,html)=>{const el=document.getElementById(id+'-peek-'+b);if(el)el.innerHTML=html};
+ set('intro',`<b>Your plan:</b> ${gaps(id+'.pi',12)}<br><b>Thesis:</b> ${gaps(id+'.pt',4)}`);
+ [1,2,3].forEach(b=>{
+  const pre=id+'.b'+b;
+  set('bp'+b,`<b>Idea:</b> ${gaps(pre+'.top',3)}<br><em>${esc(t.cA)}:</em> ${esc(choiceLabel(id,S[pre+'.ca']))||'...'} ${S[pre+'.ea']?'"'+esc(S[pre+'.ea'])+'"':''} &nbsp; <em>${esc(t.cB)}:</em> ${esc(choiceLabel(id,S[pre+'.cb']))||'...'} ${S[pre+'.eb']?'"'+esc(S[pre+'.eb'])+'"':''}<br><b>Audience and effect:</b> ${gaps(pre+'.au',3)}`);
+ });
+ set('concl',`<b>Your plan:</b> ${gaps(id+'.pc',3)}`);
+}
+function wcount(id){
+ let tot=0;['intro','bp1','bp2','bp3','concl'].forEach(b=>{const n=words(S[id+'.w.'+b]);tot+=n;const el=document.getElementById(id+'-wc-'+b);if(el)el.textContent=n+(n===1?' word':' words')});
+ document.getElementById(id+'-total').textContent=tot;
+ document.getElementById(id+'-tbar').style.width=Math.min(100,tot/MINW*100)+'%';
+ return tot;
+}
+function found(id){
+ const n=T[id].choices.filter((c,i)=>S[id+'.found.'+i]).length;
+ document.getElementById(id+'-found').textContent=n+' found';
+ T[id].choices.forEach((c,i)=>document.getElementById(id+'-ch-'+i).classList.toggle('found',!!S[id+'.found.'+i]));
+ return n;
+}
+const planFill=id=>{const f=fields.filter(e=>e.dataset.k.startsWith(id+'.p')||/^t\d\.b\d\./.test(e.dataset.k)&&e.dataset.k.startsWith(id));return f.filter(e=>(e.value||'').trim()).length/f.length};
+function onChange(k){
+ const id=(k||'').slice(0,2);
+ if(T[id]){peeks(id);wcount(id);found(id)}
+ meter();updateLock();
+}
+function meter(){
+ const a=active();const f=fields.filter(e=>a.includes(e.dataset.k.slice(0,2)));
+ const d=f.filter(e=>e.type==='checkbox'?e.checked:(e.value||'').trim()).length;
+ const p=f.length?Math.round(d/f.length*100):0;
+ document.getElementById('meterFill').style.width=p+'%';document.getElementById('meterTxt').textContent=p+'%';
+}
+function updateLock(){
+ const req=[[!!(S.name||'').trim(),'Type your name at the top of the page'],[!!S.mode,'Choose which text(s) you are writing on']];
+ active().forEach(id=>{
+  const t=T[id];const n=t.short;
+  req.push([found(id)>=6,`${n}: find at least 6 authorial choices`]);
+  req.push([planFill(id)>=0.6,`${n}: fill most of your skeleton plan`]);
+  const w=wcount(id);req.push([w>=MINW,`${n}: write at least ${MINW} words (${w} so far)`]);
+  req.push([CHECKS.concat([t.extraCheck]).every((c,i)=>S[id+'.chk.'+i]),`${n}: tick every self-check item`]);
+ });
+ const done=req.every(r=>r[0]);
+ document.getElementById('lockList').innerHTML=req.map(r=>`<li class="${r[0]?'ok':''}">${esc(r[1])}</li>`).join('');
+ const fb=document.getElementById('finishBox');const was=!fb.classList.contains('locked');
+ if(done&&!was&&updateLock.ready)toast('All done. Your PDF is ready at the end of the page.');
+ fb.classList.toggle('locked',!done);
+ document.getElementById('pdfBtn').disabled=!done;document.getElementById('copyBtn').disabled=!done;
+ document.getElementById('finishTitle').textContent=done?'Paper complete. Well done.':'Finish to unlock your PDF';
+ document.getElementById('finishTxt').textContent=done?'Download your PDF, then upload it to Toddle to be graded.':'The download button switches on when every item below is done.';
+ updateLock.ready=true;
+}
+
+const toastEl=document.getElementById('toast');let tt;
+const toast=m=>{toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('on'),2800)};
+
+/* ================= timer ================= */
+const clock=document.getElementById('clock'),tStart=document.getElementById('tStart'),cbox=document.getElementById('clockbox');
+let tid=null,rem=0;
+const total=()=>(S.mode==='both'?180:90)*60;
+const draw=()=>{const m=Math.floor(rem/60),s=rem%60;clock.textContent=(m>=60?Math.floor(m/60)+':'+String(m%60).padStart(2,'0'):String(m).padStart(2,'0'))+':'+String(s).padStart(2,'0');cbox.classList.toggle('low',rem<=600)};
+function resetClock(){clearInterval(tid);tid=null;rem=total();tStart.textContent='Start';draw()}
+tStart.addEventListener('click',()=>{
+ if(tid){clearInterval(tid);tid=null;tStart.textContent='Resume';return}
+ tid=setInterval(()=>{rem--;draw();if(rem===600)toast('10 minutes left. Finish your conclusion and self-check.');if(rem<=0){clearInterval(tid);tid=null;tStart.textContent='Start';toast('Time is up. Finish your sentence.')}},1000);
+ tStart.textContent='Pause';
+});
+document.getElementById('tReset').addEventListener('click',resetClock);
+
+/* ================= export ================= */
+function buildText(){
+ let o=`PAPER 1 FORMATIVE · MAY 2023\nName: ${S.name||''}\nDate: ${S.date||''}\n`;
+ active().forEach(id=>{
+  const t=T[id];
+  o+=`\n\n## ${t.short.toUpperCase()}: ${t.title}\nGuiding question: ${t.gq}\n`;
+  o+=`\n### Context\n`;CTX.forEach(c=>o+=`${c[1]}: ${S[id+'.ctx.'+c[0]]||''}\n`);
+  o+=`\n### Unpacking the guiding question\n`;t.unpack.forEach((u,i)=>o+=`${u[0]}\n> ${S[id+'.gq.'+i]||''}\n`);
+  o+=`\n### Authorial choices found\n`;t.choices.forEach((c,i)=>{if(S[id+'.found.'+i]||S[id+'.ev.'+i])o+=`${i+1}. ${c[0]}: ${S[id+'.ev.'+i]||''}\n`});
+  if(S[id+'.extra'])o+=`Extra choice: ${S[id+'.extra']}\n`;
+  o+=`\n### Skeleton plan\nIntroduction: ${fillFrame(t.intro,id+'.pi')}\nThesis: ${fillFrame(t.thesis,id+'.pt')}\n`;
+  [1,2,3].forEach(b=>{const p=id+'.b'+b;o+=`\nBody paragraph ${b}\nT: ${fillFrame(t.topic,p+'.top')}\nE: ${t.cA}: ${choiceLabel(id,S[p+'.ca'])}, "${S[p+'.ea']||''}" (${S[p+'.la']||''})\nE: ${t.cB}: ${choiceLabel(id,S[p+'.cb'])}, "${S[p+'.eb']||''}" (${S[p+'.lb']||''})\nE: ${fillFrame(t.explain,p+'.ex')}\nA: ${fillFrame(['For ',1,', this ',1,' because ',1,'.'],p+'.au')}\nL: ${fillFrame(['This reinforces the message that ',1,'.'],p+'.li')}\n`});
+  o+=`\nConclusion: ${fillFrame(t.concl,id+'.pc')}\n`;
+  o+=`\n### Guided analysis (${wcount(id)} words)\n\n`;['intro','bp1','bp2','bp3','concl'].forEach(b=>{if((S[id+'.w.'+b]||'').trim())o+=S[id+'.w.'+b].trim()+'\n\n'});
+  o+=`### Self-check\n`;CHECKS.concat([t.extraCheck]).forEach((c,i)=>o+=`[${S[id+'.chk.'+i]?'x':' '}] ${c[1]}\n`);
+  o+=`\nReflection: ${S[id+'.reflect']||''}\n`;
+ });
+ return o;
+}
+function essayParas(id){return ['intro','bp1','bp2','bp3','concl'].map(b=>(S[id+'.w.'+b]||'').trim()).filter(Boolean)}
+function fileName(){const n=(S.name||'').trim().replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ')||'Student';return n+' Formative 1.pdf'}
+function buildEssay(){
+ let o=`${(S.name||'').trim()}\nPaper 1 Formative 1 · May 2023${S.date?' · '+S.date:''}\n`;
+ active().forEach(id=>{const t=T[id];o+=`\n${t.short}: ${t.title}\nGuiding question: ${t.gq}\n\n${essayParas(id).join('\n\n')}\n\nWord count: ${wcount(id)}\n`});
+ return o;
+}
+function showFallback(){const fb=document.getElementById('fallback');fb.hidden=false;const tx=document.getElementById('fallbackTxt');tx.value=buildEssay();tx.focus();tx.select()}
+document.getElementById('copyBtn').addEventListener('click',()=>{
+ const txt=buildEssay();
+ try{navigator.clipboard.writeText(txt).then(()=>toast('Copied. Paste it into a document.'),showFallback)}catch(e){showFallback()}
+});
+document.getElementById('pdfBtn').addEventListener('click',()=>{
+ try{
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'pt',format:'a4'});
+  const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight(),M=50;let y=M;
+  const put=(txt,size,bold,gap)=>{doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);
+   doc.splitTextToSize(txt,W-2*M).forEach(l=>{if(y>H-M){doc.addPage();y=M}doc.text(l,M,y);y+=size*1.4});y+=gap||0};
+  put((S.name||'').trim(),16,true,2);
+  put('Paper 1 Formative 1 · May 2023'+(S.date?' · '+S.date:''),11,false,6);
+  active().forEach((id,n)=>{
+   const t=T[id];
+   if(n>0){doc.addPage();y=M}
+   y+=8;put(t.short+': '+t.title,13,true,2);
+   put('Guiding question: '+t.gq,11,false,10);
+   const paras=essayParas(id);
+   if(!paras.length)put('(No essay written for this text.)',11,false,0);
+   paras.forEach(p=>put(p,11.5,false,10));
+   put('Word count: '+wcount(id),9.5,false,0);
+  });
+  doc.save(fileName());
+  toast('PDF downloaded. Now upload it to Toddle.');
+ }catch(e){toast('The PDF could not be made here. Use Copy my essay instead.');showFallback()}
+});
+
+/* reset with in-page confirm */
+const rw=document.getElementById('resetWrap');
+rw.addEventListener('click',e=>{
+ if(e.target.id==='resetBtn'){rw.innerHTML='<span class="confirm">Delete every answer? <button class="btn sm" type="button" id="rsYes">Yes, clear</button><button class="btn sm ghost" type="button" id="rsNo">Cancel</button></span>'}
+ else if(e.target.id==='rsYes'){S={};save();try{localStorage.removeItem(KEY)}catch(x){}location.reload()}
+ else if(e.target.id==='rsNo'){rw.innerHTML='<button class="btn ghost" type="button" id="resetBtn">Clear all answers</button>'}
+});
+
+/* init */
+applyMode();['t1','t2'].forEach(id=>{peeks(id);wcount(id);found(id)});meter();updateLock();resetClock();
+})();
+</script>
+
+</body>
+</html>
