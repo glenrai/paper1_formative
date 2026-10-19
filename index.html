@@ -475,23 +475,28 @@ function meter(){
  const p=f.length?Math.round(d/f.length*100):0;
  document.getElementById('meterFill').style.width=p+'%';document.getElementById('meterTxt').textContent=p+'%';
 }
+const textReq=id=>{const t=T[id],n=t.short,w=wcount(id);return [
+  [found(id)>=6,`${n}: find at least 6 authorial choices`],
+  [planFill(id)>=0.6,`${n}: fill most of your skeleton plan`],
+  [w>=MINW,`${n}: write at least ${MINW} words (${w} so far)`],
+  [CHECKS.concat([t.extraCheck]).every((c,i)=>S[id+'.chk.'+i]),`${n}: tick every self-check item`]]};
+const textDone=id=>textReq(id).every(r=>r[0]);
+const doneTexts=()=>['t1','t2'].filter(textDone);
 function updateLock(){
- const req=[[!!(S.name||'').trim(),'Type your name at the top of the page'],[!!S.mode,'Choose which text(s) you are writing on']];
- active().forEach(id=>{
-  const t=T[id];const n=t.short;
-  req.push([found(id)>=6,`${n}: find at least 6 authorial choices`]);
-  req.push([planFill(id)>=0.6,`${n}: fill most of your skeleton plan`]);
-  const w=wcount(id);req.push([w>=MINW,`${n}: write at least ${MINW} words (${w} so far)`]);
-  req.push([CHECKS.concat([t.extraCheck]).every((c,i)=>S[id+'.chk.'+i]),`${n}: tick every self-check item`]);
- });
- const done=req.every(r=>r[0]);
- document.getElementById('lockList').innerHTML=req.map(r=>`<li class="${r[0]?'ok':''}">${esc(r[1])}</li>`).join('');
+ const named=!!(S.name||'').trim();
+ const ids=active();
+ const anyDone=doneTexts().length>0;
+ let html=`<li class="${named?'ok':''}">Type your name at the top of the page</li>`;
+ if(ids.length>1)html+=`<li class="${anyDone?'ok':''}"><b>Complete ONE text in full.</b> The second text is optional.</li>`;
+ ids.forEach(id=>{const done=textDone(id);html+=textReq(id).map(r=>`<li class="${r[0]?'ok':''}"${ids.length>1&&anyDone&&!done?' style="opacity:.5"':''}>${esc(r[1])}</li>`).join('')});
+ const done=named&&anyDone;
+ document.getElementById('lockList').innerHTML=html;
  const fb=document.getElementById('finishBox');const was=!fb.classList.contains('locked');
- if(done&&!was&&updateLock.ready)toast('All done. Your PDF is ready at the end of the page.');
+ if(done&&!was&&updateLock.ready)toast('Done. Your PDF is ready at the end of the page.');
  fb.classList.toggle('locked',!done);
  document.getElementById('pdfBtn').disabled=!done;document.getElementById('copyBtn').disabled=!done;
  document.getElementById('finishTitle').textContent=done?'Paper complete. Well done.':'Finish to unlock your PDF';
- document.getElementById('finishTxt').textContent=done?'Download your PDF, then upload it to Toddle to be graded.':'The download button switches on when every item below is done.';
+ document.getElementById('finishTxt').textContent=done?'Download your PDF, then upload it to Toddle to be graded.':(ids.length>1?'The download button switches on when you have typed your name and completed every item for at least one text.':'The download button switches on when every item below is done.');
  updateLock.ready=true;
 }
 
@@ -530,11 +535,12 @@ function buildText(){
  });
  return o;
 }
+function essayTexts(){const e=['t1','t2'].filter(id=>essayParas(id).length);return e.length?e:doneTexts()}
 function essayParas(id){return ['intro','bp1','bp2','bp3','concl'].map(b=>(S[id+'.w.'+b]||'').trim()).filter(Boolean)}
 function fileName(){const n=(S.name||'').trim().replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ')||'Student';return n+' Formative 1.pdf'}
 function buildEssay(){
  let o=`${(S.name||'').trim()}\nPaper 1 Formative 1 · May 2023${S.date?' · '+S.date:''}\n`;
- active().forEach(id=>{const t=T[id];o+=`\n${t.short}: ${t.title}\nGuiding question: ${t.gq}\n\n${essayParas(id).join('\n\n')}\n\nWord count: ${wcount(id)}\n`});
+ essayTexts().forEach(id=>{const t=T[id];o+=`\n${t.short}: ${t.title}\nGuiding question: ${t.gq}\n\n${essayParas(id).join('\n\n')}\n\nWord count: ${wcount(id)}\n`});
  return o;
 }
 function showFallback(){const fb=document.getElementById('fallback');fb.hidden=false;const tx=document.getElementById('fallbackTxt');tx.value=buildEssay();tx.focus();tx.select()}
@@ -550,7 +556,7 @@ document.getElementById('pdfBtn').addEventListener('click',()=>{
    doc.splitTextToSize(txt,W-2*M).forEach(l=>{if(y>H-M){doc.addPage();y=M}doc.text(l,M,y);y+=size*1.4});y+=gap||0};
   put((S.name||'').trim(),16,true,2);
   put('Paper 1 Formative 1 · May 2023'+(S.date?' · '+S.date:''),11,false,6);
-  active().forEach((id,n)=>{
+  essayTexts().forEach((id,n)=>{
    const t=T[id];
    if(n>0){doc.addPage();y=M}
    y+=8;put(t.short+': '+t.title,13,true,2);
