@@ -170,7 +170,7 @@ input.gap.done{border-bottom-color:var(--mint)}
 .finish.locked{background:var(--field);border:1px dashed var(--fieldline)}
 .finish b.t{font-family:var(--display);font-size:20px}
 .req{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:14px}
-.req li::before{content:"○ ";color:var(--soft)}
+.req li::before{content:"! ";color:var(--sun);font-weight:700}
 .req li.ok{color:var(--mint)}
 .req li.ok::before{content:"● "}
 .foot{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
@@ -403,8 +403,8 @@ h+=`<section class="card" id="start"><span class="kicker">Before you start · 2 
 
 h+=`<section class="card" id="finish"><span class="kicker">Hand in</span><h2>Finish and download</h2>
 <div class="paper"><span><b>Hand in on Toddle.</b> Your PDF contains your finished guided analysis only, with your name on it. Your planning stays on this page. After you download the PDF, upload it to the Formative 1 task on Toddle so it can be graded.</span></div>
-<div class="finish locked" id="finishBox"><b class="t" id="finishTitle">Finish to unlock your PDF</b><p id="finishTxt">The download button switches on when every item below is done.</p><ul class="req" id="lockList"></ul>
-<div class="foot"><button class="btn" type="button" id="pdfBtn" disabled>Download my essay as PDF</button><button class="btn ghost" type="button" id="copyBtn" disabled>Copy my essay</button></div></div>
+<div class="finish locked" id="finishBox"><b class="t" id="finishTitle">Download your essay</b><p id="finishTxt">Download your PDF, then upload it to Toddle to be graded.</p><ul class="req" id="lockList"></ul>
+<div class="foot"><button class="btn" type="button" id="pdfBtn">Download my essay as PDF</button><button class="btn ghost" type="button" id="copyBtn">Copy my essay</button></div></div>
 <div class="fallback" id="fallback" hidden><p class="hint">Select all of the text below and copy it.</p><textarea id="fallbackTxt" readonly></textarea></div>
 <div class="foot"><span id="resetWrap"><button class="btn ghost" type="button" id="resetBtn">Clear all answers</button></span></div>
 </section>`;
@@ -484,19 +484,12 @@ const textDone=id=>textReq(id).every(r=>r[0]);
 const doneTexts=()=>['t1','t2'].filter(textDone);
 function updateLock(){
  const named=!!(S.name||'').trim();
- const ids=active();
- const anyDone=doneTexts().length>0;
- let html=`<li class="${named?'ok':''}">Type your name at the top of the page</li>`;
- if(ids.length>1)html+=`<li class="${anyDone?'ok':''}"><b>Complete ONE text in full.</b> The second text is optional.</li>`;
- ids.forEach(id=>{const done=textDone(id);html+=textReq(id).map(r=>`<li class="${r[0]?'ok':''}"${ids.length>1&&anyDone&&!done?' style="opacity:.5"':''}>${esc(r[1])}</li>`).join('')});
- const done=named&&anyDone;
- document.getElementById('lockList').innerHTML=html;
- const fb=document.getElementById('finishBox');const was=!fb.classList.contains('locked');
- if(done&&!was&&updateLock.ready)toast('Done. Your PDF is ready at the end of the page.');
- fb.classList.toggle('locked',!done);
- document.getElementById('pdfBtn').disabled=!done;document.getElementById('copyBtn').disabled=!done;
- document.getElementById('finishTitle').textContent=done?'Paper complete. Well done.':'Finish to unlock your PDF';
- document.getElementById('finishTxt').textContent=done?'Download your PDF, then upload it to Toddle to be graded.':(ids.length>1?'The download button switches on when you have typed your name and completed every item for at least one text.':'The download button switches on when every item below is done.');
+ const w=['t1','t2'].reduce((n,id)=>n+wcount(id),0);
+ document.getElementById('lockList').innerHTML=named?'':'<li>Type your name at the top of the page so your file is named correctly.</li>';
+ const fb=document.getElementById('finishBox');fb.classList.remove('locked');
+ document.getElementById('pdfBtn').disabled=false;document.getElementById('copyBtn').disabled=false;
+ document.getElementById('finishTitle').textContent='Download your essay';
+ document.getElementById('finishTxt').textContent=w?'Download your PDF, then upload it to Toddle to be graded.':'You have not written your essay yet. Write it in Step 5, then download it here.';
  updateLock.ready=true;
 }
 
@@ -535,7 +528,7 @@ function buildText(){
  });
  return o;
 }
-function essayTexts(){const e=['t1','t2'].filter(id=>essayParas(id).length);return e.length?e:doneTexts()}
+function essayTexts(){const e=['t1','t2'].filter(id=>essayParas(id).length);return e.length?e:active()}
 function essayParas(id){return ['intro','bp1','bp2','bp3','concl'].map(b=>(S[id+'.w.'+b]||'').trim()).filter(Boolean)}
 function fileName(){const n=(S.name||'').trim().replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ')||'Student';return n+' Formative 1.pdf'}
 function buildEssay(){
